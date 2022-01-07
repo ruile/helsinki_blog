@@ -11,7 +11,7 @@ POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "Best Blog",
+    "title": "A Running Blog",
     "author": "Rui Le",
     "url": "ruile dot com",
     "likes": 500
