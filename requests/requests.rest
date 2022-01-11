@@ -1,4 +1,4 @@
-GET http://localhost:3001/api/blogs/
+GET http://localhost:3001/api/blogs
 
 ###
 GET http://localhost:3001/api/blogs/61c864adcbfc072a298f5dbc
@@ -11,8 +11,23 @@ POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "A Running Blog",
+    "title": "My first blog",
     "author": "Rui Le",
     "url": "ruile dot com",
-    "likes": 500
+    "likes": 500,
+    "userId": "61dd8fdff9ae722953461e92"
+}
+
+###
+GET http://localhost:3001/api/users
+
+###
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "blogs": [],
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
 }
