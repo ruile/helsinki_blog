@@ -9,13 +9,14 @@ DELETE http://localhost:3001/api/blogs/2
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGJveSIsImlkIjoiNjFkZWRiZGUzNGRjOWI3ZGU4ZWJiNDQyIiwiaWF0IjoxNjQxOTk3MTQ3fQ.hsydoJnS2bHhkHPB1fuol2X7ko7aKu1qRolqgBG48FA
 
 {
-    "title": "My first blog",
+    "title": "Tokenized's blog",
     "author": "Rui Le",
     "url": "ruile dot com",
     "likes": 500,
-    "userId": "61dd8fdff9ae722953461e92"
+    "userId": "61dedbde34dc9b7de8ebb442"
 }
 
 ###
@@ -27,7 +28,16 @@ content-type: application/json
 
 {
     "blogs": [],
-    "username": "root",
-    "name": "Superuser",
+    "username": "fatboy",
+    "name": "fatboy",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3001/api/login
+content-type: application/json
+
+{
+    "username": "fatboy",
     "password": "salainen"
 }
