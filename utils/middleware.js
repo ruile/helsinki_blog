@@ -1,5 +1,8 @@
 const logger = require('./logger')
 
+// middlewares are functions with 3 parameters that intercepts the request to all route handlers
+// middlewares should return next() to chain to other middlewares
+
 const requestLogger = (request, response, next) => {
     logger.info('Method:', request.method)
     logger.info('Path:  ', request.path)
@@ -19,13 +22,34 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'malformatted id' })
     } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
-    }
+    } else if (error.name === 'JsonWebTokenError') {
+        return response.status(401).json({
+          error: 'invalid token'
+        })
+    } else if (error.name === 'TokenExpiredError') {
+        return response.status(401).json({
+          error: 'token expired'
+        })
+      }
 
     next(error)
+}
+
+const tokenExtractor = (request, response, next) => {
+  console.log('Entered token extractor')
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    console.log('Entered if statement in token extractor')
+    // return authorization.substring(7)
+    request.token = authorization.substring(7)
+  }
+
+  next()
 }
 
 module.exports = {
     requestLogger,
     unknownEndpoint,
-    errorHandler
+    errorHandler,
+    tokenExtractor
 }
