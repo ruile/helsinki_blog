@@ -2,6 +2,7 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const blog = require('../models/blog')
 
 // Refactored to be a middleware
 // const getTokenFrom = request => {
@@ -42,37 +43,24 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
 
-    const body = request.body
-
-    // const token = getTokenFrom(request)
-    // contains username and id fields
-    // const decodedToken = jwt.verify(token, process.env.SECRET)
-
-    // obtain token field from request, which was added by the middleware
-    console.log('request token is', request.token)
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
-    
-    if (!decodedToken.id) {
-      return response.status(401).json({ error: 'token missing or invalid' })
-    }
-    const user = await User.findById(decodedToken.id)
-    
-    // blog
-    //   .save()
-    //   .then(result => {
-    //     response.status(201).json(result)
-    //   })
-
-    const blog = new Blog({
-        title: body.title,
-        author: body.author,
-        url: body.url,
-        likes: body.likes,
-        user: user._id
-    })
+  const user = request.user
   
-
+  const body = request.body
+  
+  const blog = new Blog({
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+    user: user._id
+  })
+  
+  // blog
+  //   .save()
+  //   .then(result => {
+  //     response.status(201).json(result)
+  //   })
+  
     const savedBlog = await blog.save()
 
     user.blogs = user.blogs.concat(savedBlog._id)
@@ -83,8 +71,19 @@ blogsRouter.post('/', async (request, response) => {
 
 
 blogsRouter.delete('/:id', async (request, response) => {
+
+  const userid = request.user.id
+  console.log('userid associated with token', userid)
+
+  const blog = await Blog.findById(request.params.id)
+
+  if ( blog.user.toString() === userid.toString() ) {
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
+    return
+  }
+
+  response.status(400).json({ error: 'wrong id' })
 })
 
 

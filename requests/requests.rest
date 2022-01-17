@@ -1,15 +1,17 @@
 GET http://localhost:3001/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGJveSIsImlkIjoiNjFlMDMzN2E1MDU0YTFlOTg1ODIwMDdjIiwiaWF0IjoxNjQyNDI4ODY5LCJleHAiOjE2NDI0MzI0Njl9.AHq08pwFQAFz9wVz8t4L-_NElJ4nWuQIyPo2RV-ypv4
 
 ###
 GET http://localhost:3001/api/blogs/61c864adcbfc072a298f5dbc
 
 ###
-DELETE http://localhost:3001/api/blogs/2
+DELETE http://localhost:3001/api/blogs/61e57ff6bae8157776765167
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGJveSIsImlkIjoiNjFlMDMzN2E1MDU0YTFlOTg1ODIwMDdjIiwiaWF0IjoxNjQyNDI4ODY5LCJleHAiOjE2NDI0MzI0Njl9.AHq08pwFQAFz9wVz8t4L-_NElJ4nWuQIyPo2RV-ypv4
 
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGJveSIsImlkIjoiNjFlMDMzN2E1MDU0YTFlOTg1ODIwMDdjIiwiaWF0IjoxNjQyMDgzMjI0LCJleHAiOjE2NDIwODY4MjR9.WN7XepXKsZqv0UivMrH-rSpw16EfpuPEZHD__L9VlJ0
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhdGJveSIsImlkIjoiNjFlMDMzN2E1MDU0YTFlOTg1ODIwMDdjIiwiaWF0IjoxNjQyNDI4ODY5LCJleHAiOjE2NDI0MzI0Njl9.AHq08pwFQAFz9wVz8t4L-_NElJ4nWuQIyPo2RV-ypv4
 
 {
     "title": "A new day by Fatboy",
@@ -18,6 +20,21 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZhd
     "likes": 500,
     "userId": "61e0337a5054a1e98582007c"
 }
+
+###
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlY29uZHVzZXIiLCJpZCI6IjYxZTU3YjZlY2FlMGI4N2ZiMDE1OWQxZiIsImlhdCI6MTY0MjQyOTM1NCwiZXhwIjoxNjQyNDMyOTU0fQ.UemyYnoAkKxoSAzaMucqMmKsaRiA6IeiB3cFd-vLR8A
+
+{
+    "title": "A second book",
+    "author": "A second author",
+    "url": "ruile dot com",
+    "likes": 500,
+    "userId": "61e57b6ecae0b87fb0159d1f"
+}
+
+
 
 ###
 GET http://localhost:3001/api/users
@@ -34,10 +51,30 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "blogs": [],
+    "username": "seconduser",
+    "name": "seconduser",
+    "password": "12345"
+}
+
+###
 POST http://localhost:3001/api/login
 content-type: application/json
 
 {
     "username": "fatboy",
     "password": "abcde"
+}
+
+###
+POST http://localhost:3001/api/login
+content-type: application/json
+
+{
+    "username": "seconduser",
+    "password": "12345"
 }
