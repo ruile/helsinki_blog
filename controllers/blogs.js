@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const blog = require('../models/blog')
+const middleware = require('../utils/middleware')
 
 // Refactored to be a middleware
 // const getTokenFrom = request => {
@@ -41,7 +42,7 @@ blogsRouter.get('/:id', async (request, response) => {
 })
 
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
 
   const user = request.user
   
@@ -70,7 +71,7 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
 
   const userid = request.user.id
   console.log('userid associated with token', userid)
