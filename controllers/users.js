@@ -31,6 +31,7 @@ usersRouter.post('/', async (request, response) => {
     passwordHash,
   })
 
+  // apparently this saved user will have a field called 'token'
   const savedUser = await user.save()
 
   response.json(savedUser)
